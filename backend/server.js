@@ -49,7 +49,7 @@ app.get("/api/popular", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/arise_worship";
+const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/arise_worship";
 
 mongoose
   .connect(MONGO_URI)
