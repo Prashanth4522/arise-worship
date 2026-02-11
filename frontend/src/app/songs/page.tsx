@@ -1,6 +1,6 @@
  "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getApiUrl } from "@/lib/api";
@@ -19,7 +19,7 @@ const languageLabels: Record<string, string> = {
   kannada: "Kannada / English",
 };
 
-export default function SongsListPage() {
+function SongsListContent() {
   const searchParams = useSearchParams();
   const [songs, setSongs] = useState<Song[]>([]);
   const [loading, setLoading] = useState(true);
@@ -202,5 +202,20 @@ export default function SongsListPage() {
   );
 }
 
+function SongsListFallback() {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="text-white/60">Loading…</div>
+    </div>
+  );
+}
+
+export default function SongsListPage() {
+  return (
+    <Suspense fallback={<SongsListFallback />}>
+      <SongsListContent />
+    </Suspense>
+  );
+}
 
 
